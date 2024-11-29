@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_conditionLEN">Lands EN</string>
+    <color name="background_colorLEN">#4CAF50</color>
+    <color name="text_colorLEN">#020702</color>
+</resources>

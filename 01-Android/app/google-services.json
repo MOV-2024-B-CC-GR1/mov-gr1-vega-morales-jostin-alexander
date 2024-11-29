@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "248277342088",
+    "project_id": "cc-2024b-mov-gr1-javm",
+    "storage_bucket": "cc-2024b-mov-gr1-javm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248277342088:android:63c7059167589718660c3d",
+        "android_client_info": {
+          "package_name": "com.example.ccgr12024b_javm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoH94Ff6XtJmAH0k_1HixZDVfOcvS4Vvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

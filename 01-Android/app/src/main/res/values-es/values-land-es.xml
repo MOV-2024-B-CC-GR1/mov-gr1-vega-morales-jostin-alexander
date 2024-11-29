@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_conditionLES">LAND ES</string>
+    <color name="background_colorLES">#CD603E</color>
+    <color name="text_colorLES">#463B3B</color>
+</resources>
