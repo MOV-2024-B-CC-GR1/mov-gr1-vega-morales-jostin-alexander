@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <!-- Nombre -->
+        <EditText
+            android:id="@+id/etNombreEmpleado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre" />
+
+        <!-- Edad -->
+        <EditText
+            android:id="@+id/etEdadEmpleado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Edad"
+            android:inputType="number" />
+
+        <!-- Puesto -->
+        <EditText
+            android:id="@+id/etPuestoEmpleado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Puesto" />
+
+        <!-- Salario -->
+        <EditText
+            android:id="@+id/etSalarioEmpleado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Salario"
+            android:inputType="numberDecimal" />
+
+        <!-- Botón Guardar -->
+        <Button
+            android:id="@+id/btnGuardarEmpleado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar" />
+    </LinearLayout>
+</ScrollView>

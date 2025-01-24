@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">ccgr12024b_javm</string>
+    <string name="text_conditionLE">LANDS EN</string>
+    <color name="background_colorLE">#D9C8C8</color>
+    <color name="text_colorLE">#D16464</color>
+    <string name="app_name">App</string>
+    <string name="text_conditionPS">Texto de prueba o condición</string>
+    <string-array name="string_array_opciones_dialogo">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miercoles</item>
+    </string-array>
+    <string name="title_activity_ggoogle_maps_placeholder">GGoogleMapsPlaceholder</string>
 </resources>

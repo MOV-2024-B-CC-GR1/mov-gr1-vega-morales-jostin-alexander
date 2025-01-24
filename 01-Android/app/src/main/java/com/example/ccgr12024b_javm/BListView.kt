@@ -1,18 +1,85 @@
 package com.example.ccgr12024b_javm
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.ContextMenu
+import android.view.MenuItem
 import android.view.View
-import android.widget.Adapter
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
+import android.widget.Button
 
 class BListView : AppCompatActivity() {
     val arreglo = BBaseDatosMemoria.arregloBEntrenador
+
+    var posicionItemSeleccionado = -1
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.mi_editar -> {
+                mostrarSnackbar("$pocisionItemSeleccionado")
+                return true
+            }
+            R.id.mi_eliminar -> {
+                mostrarSnackbar("${posicionItemSeleccionado}")
+                abrirDialogo()
+                return true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+    }
+
+    fun mostrarSnackbar (texto: String){
+        val snack = Snackbar.make(
+            findViewById(R.id.cl_list_view),
+            texto,
+            Snackbar.LENGTH_INDEFINITE
+        )
+        snack.show()
+    }
+
+    fun abrirDialogo(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Desea Eliminar")
+        builder.setPositiveButton(
+            "Aceptar",
+            DialogInterface.OnClickListener{ dialog, which ->
+                mostrarSnackbar("Eliminar aceptado")
+            })
+        builder.setNegativeButton(
+            "Cancelar",
+            null)
+        val opciones = resources.getStringArray(
+            R.array.string_array_opciones_dialogo
+        )
+        val seleccionPrevia = booleanArrayOf(
+            true, false, false
+        )
+        builder.setMultiChoiceItems(
+            opciones,
+            seleccionPrevia,
+            {
+                    dialog,
+                    which,
+                    isChecked -> mostrarSnackbar(
+                "${which} $isChecked"
+            )
+            }
+        )
+        val dialogo = builder.create()
+        dialogo.show()
+    }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,10 +89,10 @@ class BListView : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val listView = findViewById<ListView>(R.id.lb_list_view)
+        val listView = findViewById<ListView>(R.id.lv_list_view)
         val adaptador = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1, // XML que vamos a usar
+            this, //contexto
+            android.R.layout.simple_list_item_1, //XML que vamos a usar
             arreglo
         )
         listView.adapter = adaptador
@@ -35,10 +102,8 @@ class BListView : AppCompatActivity() {
             .setOnClickListener { anadirEntrenador(adaptador)}
         registerForContextMenu(listView)
     }
-    fun anadirEntrenador(adaptador: ArrayAdapter<BEntrenador>){
-        arreglo.add(BEntrenador(4, "Maya", "maya@m.com"))
-        adaptador.notifyDataSetChanged()
-    }
+
+    var pocisionItemSeleccionado = -1 //Variable global
 
     override fun onCreateContextMenu(
         menu: ContextMenu?,
@@ -46,12 +111,21 @@ class BListView : AppCompatActivity() {
         menuInfo: ContextMenu.ContextMenuInfo?
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        //llenamos opciones del menu
+        //Opciones del menu
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
         //obtener id
         val info = menuInfo as AdapterView.AdapterContextMenuInfo
         val posicion = info.position
-        posicionItemSeleccionado = posicion
+        posicionItemSeleccionado = info.position
+    }
+
+    fun anadirEntrenador (adaptador: ArrayAdapter<BEntrenador>){
+        arreglo.add(BEntrenador(4, "David", "d@d.com"))
+        adaptador.notifyDataSetChanged()
+
     }
 }
+
+
+

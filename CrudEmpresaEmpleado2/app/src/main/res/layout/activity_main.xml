@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <!-- Botón para ver la lista de empresas -->
+    <Button
+        android:id="@+id/btnVerEmpresas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ver Empresas"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Botón para agregar una nueva empresa -->
+    <Button
+        android:id="@+id/btnAgregarEmpresa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agregar Empresa" />
+
+</LinearLayout>
