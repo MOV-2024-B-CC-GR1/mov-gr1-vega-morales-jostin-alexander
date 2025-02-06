@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#6AE6FFFF"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <!-- Botón para ver la lista de empresas -->
@@ -11,8 +12,8 @@
         android:id="@+id/btnVerEmpresas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ver Empresas"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:text="Ver Empresas" />
 
     <!-- Botón para agregar una nueva empresa -->
     <Button
