@@ -59,10 +59,9 @@ class EmpresaListActivity : AppCompatActivity() {
         lvEmpresas.adapter = adapter
     }
 
-
     private fun mostrarOpciones(empresa: Empresa) {
-        // Mostrar un cuadro de diálogo con las opciones Actualizar, Eliminar y Ver Empleados
-        val opciones = arrayOf("Actualizar", "Eliminar", "Ver Empleados")
+        // Agregamos "Ver en Mapa" a las opciones
+        val opciones = arrayOf("Actualizar", "Eliminar", "Ver Empleados", "Ver Mapa")
         AlertDialog.Builder(this)
             .setTitle("Opciones para ${empresa.nombre}")
             .setItems(opciones) { _, which ->
@@ -82,13 +81,24 @@ class EmpresaListActivity : AppCompatActivity() {
                         }
                         startActivity(intent)
                     }
+                    3 -> { // Ver en Mapa
+                        abrirMapa(empresa)
+                    }
                 }
             }
             .show()
     }
 
+    private fun abrirMapa(empresa: Empresa) {
+        val intent = Intent(this, MapaEmpresaActivity::class.java).apply {
+            putExtra("latitud", empresa.latitud)
+            putExtra("longitud", empresa.longitud)
+            putExtra("nombre", empresa.nombre)
+        }
+        startActivity(intent)
+    }
+
     private fun confirmarEliminacion(empresa: Empresa) {
-        // Mostrar un cuadro de confirmación para eliminar la empresa
         AlertDialog.Builder(this)
             .setTitle("Eliminar Empresa")
             .setMessage("¿Estás seguro de que deseas eliminar la empresa '${empresa.nombre}'?")

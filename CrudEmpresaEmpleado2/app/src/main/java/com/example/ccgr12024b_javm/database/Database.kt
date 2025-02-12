@@ -7,11 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper
 class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        // Nombre y versión de la base de datos
         private const val DATABASE_NAME = "EmpresaEmpleadoDB.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2  // Incrementamos la versión
 
-        // Tablas y scripts de creación
         private const val TABLE_EMPRESA = "Empresa"
         private const val TABLE_EMPLEADO = "Empleado"
 
@@ -22,8 +20,10 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 ubicacion TEXT NOT NULL,
                 fecha_creacion TEXT NOT NULL,
                 numero_empleados INTEGER NOT NULL,
-                ingresos_anuales REAL NOT NULL
-            );
+                ingresos_anuales REAL NOT NULL,
+                latitud REAL NOT NULL DEFAULT 0.0,
+                longitud REAL NOT NULL DEFAULT 0.0
+            )
         """
 
         private const val CREATE_TABLE_EMPLEADO = """
@@ -36,21 +36,20 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 fecha_contratacion TEXT NOT NULL,
                 salario REAL NOT NULL,
                 FOREIGN KEY(id_empresa) REFERENCES $TABLE_EMPRESA(id) ON DELETE CASCADE
-            );
+            )
         """
     }
 
-    override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL(CREATE_TABLE_EMPRESA)
-        db?.execSQL(CREATE_TABLE_EMPLEADO)
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL(CREATE_TABLE_EMPRESA)
+        db.execSQL(CREATE_TABLE_EMPLEADO)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        // Implementación de lógica para actualizar la base de datos si cambia la versión
-        if (oldVersion < newVersion) {
-            db?.execSQL("DROP TABLE IF EXISTS $TABLE_EMPLEADO")
-            db?.execSQL("DROP TABLE IF EXISTS $TABLE_EMPRESA")
-            onCreate(db)
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        if (oldVersion < 2) {
+            // Agregar las nuevas columnas
+            db.execSQL("ALTER TABLE $TABLE_EMPRESA ADD COLUMN latitud REAL NOT NULL DEFAULT 0.0")
+            db.execSQL("ALTER TABLE $TABLE_EMPRESA ADD COLUMN longitud REAL NOT NULL DEFAULT 0.0")
         }
     }
 }

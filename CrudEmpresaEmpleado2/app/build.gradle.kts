@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.firebase.appdistribution)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -52,6 +54,8 @@ android {
 
 dependencies {
 
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("org.osmdroid:osmdroid-android:6.1.16")
     implementation("androidx.appcompat:appcompat:1.6.1") // Línea corregida
     implementation("androidx.core:core-ktx:1.12.0") // Línea corregida
     implementation("com.google.android.material:material:1.9.0") // Última versión
@@ -63,6 +67,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

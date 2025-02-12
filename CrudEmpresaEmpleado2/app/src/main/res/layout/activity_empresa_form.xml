@@ -14,14 +14,16 @@
             android:id="@+id/etNombreEmpresa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre de la Empresa" />
+            android:hint="Nombre de la Empresa"
+            android:layout_marginBottom="8dp"/>
 
         <!-- Ubicación -->
         <EditText
             android:id="@+id/etUbicacionEmpresa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ubicación" />
+            android:hint="Ubicación"
+            android:layout_marginBottom="8dp"/>
 
         <!-- Ingresos anuales -->
         <EditText
@@ -29,7 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingresos Anuales"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="8dp"/>
 
         <!-- Número de empleados -->
         <EditText
@@ -37,7 +40,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Número de Empleados"
-            android:inputType="number" />
+            android:inputType="number"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Nuevos campos para coordenadas -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ubicación en el mapa"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Latitud -->
+        <EditText
+            android:id="@+id/etLatitud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Latitud (Ej: -12.0464)"
+            android:inputType="numberDecimal|numberSigned"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Longitud -->
+        <EditText
+            android:id="@+id/etLongitud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Longitud (Ej: -77.0428)"
+            android:inputType="numberDecimal|numberSigned"
+            android:layout_marginBottom="16dp"/>
 
         <!-- Botón Guardar -->
         <Button

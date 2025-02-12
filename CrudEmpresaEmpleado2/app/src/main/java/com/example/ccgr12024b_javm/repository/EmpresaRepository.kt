@@ -20,10 +20,22 @@ class EmpresaRepository(context: Context) {
             put("fecha_creacion", dateFormat.format(empresa.fechaCreacion))
             put("numero_empleados", empresa.numeroEmpleados)
             put("ingresos_anuales", empresa.ingresosAnuales)
+            put("latitud", empresa.latitud)
+            put("longitud", empresa.longitud)
         }
-        val result = db.insert("Empresa", null, values)
-        db.close()
-        return result
+
+        return try {
+            db.beginTransaction()
+            val result = db.insert("Empresa", null, values)
+            db.setTransactionSuccessful()
+            result
+        } catch (e: Exception) {
+            e.printStackTrace()
+            -1
+        } finally {
+            db.endTransaction()
+            db.close()
+        }
     }
 
     fun actualizarEmpresa(empresa: Empresa): Int {
@@ -34,65 +46,96 @@ class EmpresaRepository(context: Context) {
             put("fecha_creacion", dateFormat.format(empresa.fechaCreacion))
             put("numero_empleados", empresa.numeroEmpleados)
             put("ingresos_anuales", empresa.ingresosAnuales)
+            put("latitud", empresa.latitud)
+            put("longitud", empresa.longitud)
         }
-        val result = db.update("Empresa", values, "id = ?", arrayOf(empresa.id.toString()))
-        db.close()
-        return result
+
+        return try {
+            db.beginTransaction()
+            val result = db.update("Empresa", values, "id = ?", arrayOf(empresa.id.toString()))
+            db.setTransactionSuccessful()
+            result
+        } catch (e: Exception) {
+            e.printStackTrace()
+            0
+        } finally {
+            db.endTransaction()
+            db.close()
+        }
     }
 
     fun eliminarEmpresa(id: Int): Int {
         val db = dbHelper.writableDatabase
-        val result = db.delete("Empresa", "id = ?", arrayOf(id.toString()))
-        db.close()
-        return result
+        return try {
+            db.beginTransaction()
+            val result = db.delete("Empresa", "id = ?", arrayOf(id.toString()))
+            db.setTransactionSuccessful()
+            result
+        } catch (e: Exception) {
+            e.printStackTrace()
+            0
+        } finally {
+            db.endTransaction()
+            db.close()
+        }
     }
 
     fun obtenerTodas(): List<Empresa> {
         val empresas = mutableListOf<Empresa>()
         val db = dbHelper.readableDatabase
-        val cursor: Cursor = db.rawQuery("SELECT * FROM Empresa", null)
+        var cursor: Cursor? = null
 
-        if (cursor.moveToFirst()) {
-            do {
-                try {
+        try {
+            cursor = db.rawQuery("SELECT * FROM Empresa", null)
+            if (cursor?.moveToFirst() == true) {
+                do {
                     val empresa = Empresa(
                         id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                         nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
                         ubicacion = cursor.getString(cursor.getColumnIndexOrThrow("ubicacion")),
                         fechaCreacion = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fecha_creacion"))) ?: Date(),
                         numeroEmpleados = cursor.getInt(cursor.getColumnIndexOrThrow("numero_empleados")),
-                        ingresosAnuales = cursor.getDouble(cursor.getColumnIndexOrThrow("ingresos_anuales"))
+                        ingresosAnuales = cursor.getDouble(cursor.getColumnIndexOrThrow("ingresos_anuales")),
+                        latitud = cursor.getDouble(cursor.getColumnIndexOrThrow("latitud")),
+                        longitud = cursor.getDouble(cursor.getColumnIndexOrThrow("longitud"))
                     )
                     empresas.add(empresa)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            } while (cursor.moveToNext())
+                } while (cursor.moveToNext())
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            cursor?.close()
+            db.close()
         }
-
-        cursor.close()
-        db.close()
         return empresas
     }
 
     fun obtenerPorId(id: Int): Empresa? {
         val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM Empresa WHERE id = ?", arrayOf(id.toString()))
+        var cursor: Cursor? = null
         var empresa: Empresa? = null
 
-        if (cursor.moveToFirst()) {
-            empresa = Empresa(
-                id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
-                nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
-                ubicacion = cursor.getString(cursor.getColumnIndexOrThrow("ubicacion")),
-                fechaCreacion = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fecha_creacion"))) ?: Date(),
-                numeroEmpleados = cursor.getInt(cursor.getColumnIndexOrThrow("numero_empleados")),
-                ingresosAnuales = cursor.getDouble(cursor.getColumnIndexOrThrow("ingresos_anuales"))
-            )
+        try {
+            cursor = db.rawQuery("SELECT * FROM Empresa WHERE id = ?", arrayOf(id.toString()))
+            if (cursor?.moveToFirst() == true) {
+                empresa = Empresa(
+                    id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                    nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
+                    ubicacion = cursor.getString(cursor.getColumnIndexOrThrow("ubicacion")),
+                    fechaCreacion = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fecha_creacion"))) ?: Date(),
+                    numeroEmpleados = cursor.getInt(cursor.getColumnIndexOrThrow("numero_empleados")),
+                    ingresosAnuales = cursor.getDouble(cursor.getColumnIndexOrThrow("ingresos_anuales")),
+                    latitud = cursor.getDouble(cursor.getColumnIndexOrThrow("latitud")),
+                    longitud = cursor.getDouble(cursor.getColumnIndexOrThrow("longitud"))
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            cursor?.close()
+            db.close()
         }
-
-        cursor.close()
-        db.close()
         return empresa
     }
 }

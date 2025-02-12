@@ -8,10 +8,11 @@ data class Empresa(
     var ubicacion: String,           // Ubicación de la empresa
     val fechaCreacion: Date,         // Fecha de creación de la empresa
     var numeroEmpleados: Int,        // Número de empleados en la empresa
-    var ingresosAnuales: Double      // Ingresos anuales de la empresa
+    var ingresosAnuales: Double,      // Ingresos anuales de la empresa
+    var latitud: Double,             // Latitud de la ubicación de la empresa
+    var longitud: Double             // Longitud de la ubicación de la empresa
 ) {
     override fun toString(): String {
         return "$nombre\n$ubicacion\n$$ingresosAnuales\n$numeroEmpleados"
     }
 }
-
